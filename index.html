@@ -12,9 +12,9 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-sm" id="liv1">
+            <div class="col-sm book active" id="liv1">
                 <img class="centered" src="resources/img1.jpg">
-                <h1 class="centered">O Nome do Vento</h1>
+                <h1 class="centered title">O Nome do Vento</h1>
                 <p class="centered">Autor: Patrick Rothfuss</p>
                 <p>Da infância como membro de uma família unida de nómadas Edema Ruh até à provação dos primeiros dias como
                     aluno de magia numa universidade prestigiada, o humilde estalajadeiro Kvothe relata a história de como
@@ -24,24 +24,25 @@
                     de uma personalidade enquanto examina a relação entre a lenda e a sua verdade, a verdade que reside no
                     coração das histórias. Contada de forma elegante e enriquecida com vislumbres de histórias futuras, esta
                     "autobiografia" de um herói rica em detalhes é altamente recomendada para bibliotecas de qualquer tamanho.</p>
-                <div id="container">
+                <div id="container-fluid">
                     <div class="row">
                         <div class="col-6">
-                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success">Gosto</button>
+                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success like-dislike">Gosto</button>
                             <a class="left" target="_blank" href="https://pt.wikipedia.org/wiki/O_Nome_do_Vento">Wikipedia</a>
                             <a class="left" target="_blank" href="https://www.fnac.pt/O-Nome-do-Vento-Patrick-Rothfuss/a265597#">Fnac</a>
                         </div>
                         <div class="col-6">
-                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger">Não Gosto</button>
+                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger like-dislike">Não Gosto</button>
                             <a target="_blank" href="https://www.wook.pt/livro/o-nome-do-vento-patrick-rothfuss/2145200">Wook</a>
-                            <a target="_blank" href="https://google.com">Outros</a>
+                            <a target="_blank" href="https://google.com">Outros</a>    
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-sm" id="liv2">
+            <div class="col-sm book" id="liv2">
                 <img class="centered" src="resources/img2.jpg">
-                <h1 class="centered">The Road</h1>
+                <h1 class="centered title">The Road</h1>
                 <p class="centered">Autor: Cormac McCarthy</p>
                 <p>A father and his son walk alone through burned America. Nothing moves in the ravaged landscape save the ash
                     on the wind. It is cold enough to crack stones, and when the snow falls it is gray. The sky is dark.
@@ -51,21 +52,21 @@
                 <div id="container-fluid">
                     <div class="row">
                         <div class="col-6">
-                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success">Gosto</button>
+                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success like-dislike">Gosto</button>
                             <a class="left" target="_blank" href="https://pt.wikipedia.org/wiki/A_Estrada_(livro)">Wikipedia</a>
                             <a class="left" target="_blank" href="https://www.fnac.pt/A-Estrada-Cormac-McCarthy/a297658#">Fnac</a>
                         </div>
                         <div class="col-6">
-                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger">Não Gosto</button>
+                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger like-dislike">Não Gosto</button>
                             <a target="_blank" href="https://www.wook.pt/livro/a-estrada-cormac-mccarthy/194209">Wook</a>
                             <a target="_blank" href="https://google.com">Outros</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm" id="liv3">
+            <div class="col-sm book" id="liv3">
                 <img class="centered" src="resources/img3.jpg">
-                <h1 class="centered">Release</h1>
+                <h1 class="centered title">Release</h1>
                 <p class="centered">Autor: Patrick Ness</p>
                 <p>Adam Thorn is having what will turn out to be the most unsettling, difficult day of his life, with relationships
                     fracturing, a harrowing incident at work, and a showdown between this gay teen and his preacher father
@@ -75,18 +76,25 @@
                 <div id="container-fluid">
                     <div class="row">
                         <div class="col-6">
-                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success btn">Gosto</button>
+                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success btn like-dislike">Gosto</button>
                             <a class="left" target="_blank" href="https://pt.wikipedia.org/wiki/Patrick_Ness">Wikipedia</a>
                             <a class="left" target="_blank" href="https://pt.wikipedia.org/wiki/O_Nome_do_Vento">Fnac</a>
                         </div>
                         <div class="col-6">
-                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger">Não Gosto</button>
+                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger like-dislike">Não Gosto</button>
                             <a target="_blank" href="https://www.wook.pt/autor/patrick-ness/115075">Wook</a>
                             <a target="_blank" href="https://google.com">Outros</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- <div class="col-sm" id="stats">
+                <h1 class="centered">Stats</h1>
+                <h5>Likes:</h5>
+                <label id="likes">None</label>
+                <h5>Dislikes</h5>
+                <label id="dislikes">None</label>
+            </div> -->
         </div>
     </div>
     <script src="../JQuery/jquery-3.3.1.js"></script>

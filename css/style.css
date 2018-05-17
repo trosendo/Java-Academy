@@ -25,14 +25,13 @@ p {
 
 a {
     display: block;
-    width: auto;
-    /* width: -moz-fit-content;  needs centering */
-    border: 3px solid green;
+    width: -moz-fit-content;  
+    /* border: 3px solid green; */
 }
 
-a.left{
+/* a.left{
     text-align: right;
-}
+} */
 
 .container {
     margin-top: 20px;
@@ -41,7 +40,7 @@ a.left{
 }
 
 .btn-block {
-    border: 3px solid green;
+    /* border: 3px solid green; */
     width: auto;
     position: relative;
     left: 50%;
@@ -49,9 +48,9 @@ a.left{
 }
 
 
-.book{
+/* .book{
     display: none;
 }
 .book.active{
     display:block;
-}
+} */

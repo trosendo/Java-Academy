@@ -76,8 +76,7 @@ class Library{
         this.books = [book1, book2, book3];
         this.currentBook = 0;
     }
-    addBook(name1, img1){
-        var book = {name: name1, img: img1};
+    addBook(book){
         this.books.push(book);
     }
     getNextBook(){

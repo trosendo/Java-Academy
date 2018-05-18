@@ -47,6 +47,9 @@ a {
     transform: translateX(-50%);
 }
 
+.inactive {
+    display: none;
+}
 
 /* .book{
     display: none;

@@ -1,86 +1,102 @@
+var book1 = {
+    name: "O Nome do Vento",
+    img: "resources/img1.jpg",
+    author: "Patrick Rothfuss",
+    description: "Da infância como membro de uma família unida de nómadas Edema Ruh até à provação dos primeiros dias como aluno de magia numa universidade prestigiada, o humilde estalajadeiro Kvothe relata a história de como um rapaz desfavorecido pelo destino se torna um herói, um bardo, um mago e uma lenda. O primeiro romance de Rothfuss lança uma trilogia relatando não apenas a história da Humanidade, mas também a história de um mundo ameaçado por um mal cuja existência nega de forma desesperada. O autor explora o desenvolvimento de uma personalidade enquanto examina a relação entre a lenda e a sua verdade, a verdade que reside no coração das histórias. Contada de forma elegante e enriquecida com vislumbres de histórias futuras, esta \"autobiografia\" de um herói rica em detalhes é altamente recomendada para bibliotecas de qualquer tamanho.",
+    opinion: "",
+    links: [
+        {
+            url: "https://pt.wikipedia.org/wiki/O_Nome_do_Vento", 
+            name: "Wikipedia"
+        },
+        {
+            url: "https://www.fnac.pt/O-Nome-do-Vento-Patrick-Rothfuss/a265597#", 
+            name: "Fnac"
+        },
+        {
+            url: "https://www.wook.pt/livro/o-nome-do-vento-patrick-rothfuss/2145200", 
+            name: "Wook"    
+        },
+        {
+            url: "https://google.com",
+            name: "outros"
+        }
+    ]
+};
+var book2 = {
+    name: "The Road",
+    img: "resources/img2.jpg",
+    author: "Cormac McCarthy",
+    description: "A father and his son walk alone through burned America. Nothing moves in the ravaged landscape save the ash on the wind. It is cold enough to crack stones, and when the snow falls it is gray. The sky is dark. Their destination is the coast, although they don’t know what, if anything, awaits them there. They have nothing; just a pistol to defend themselves against the lawless bands that stalk the road, the clothes they are wearing, a cart of scavenged food—and each other.",
+    opinion: "",
+    links: [
+        {
+            url: "https://pt.wikipedia.org/wiki/A_Estrada_(livro)", 
+            text: "Wikipedia"
+        },
+        {
+            url: "https://www.fnac.pt/A-Estrada-Cormac-McCarthy/a297658#", 
+            name: "Fnac"
+        },
+        {
+            url: "https://www.wook.pt/livro/a-estrada-cormac-mccarthy/194209", 
+            name: "Wook"    
+        },
+        {
+            url: "https://google.com",
+            name: "outros"
+        }
+    ]
+};
+var book3 = {
+    name: "Release",
+    img: "resources/img3.jpg",
+    author: "Patrick Ness",
+    description: "Adam Thorn is having what will turn out to be the most unsettling, difficult day of his life, with relationships fracturing, a harrowing incident at work, and a showdown between this gay teen and his preacher father that changes everything. It's a day of confrontation, running, sex, love, heartbreak, and maybe, just maybe, hope. He won't come out of it unchanged. And all the while, lurking at the edges of the story, something extraordinary and unsettling is on a collision course.",
+    opinion: "",
+    links: [
+        {
+            url: "https://pt.wikipedia.org/wiki/Patrick_Ness", 
+            text: "Wikipedia"
+        },
+        {
+            url: "https://www.fnac.pt/Release/a1100006#", 
+            name: "Fnac"
+        },
+        {
+            url: "https://www.wook.pt/autor/patrick-ness/115075", 
+            name: "Wook"    
+        },
+        {
+            url: "https://google.com",
+            name: "outros"
+        }
+    ]
+};
+
 class Library{
-    constructor(search){
-        this.books = [];
+    constructor(){
+        this.books = [book1, book2, book3];
         this.seenBooks = [];
-        this.searchParam = search;
-        this.currentIndex = 0;
-        this.getBooks(this.searchParam, this.currentIndex);
-    }
-    getBooks(search, start_index){
-        var obj = this;
-        $.ajax({
-            url: "https://www.googleapis.com/books/v1/volumes?q=" + search + "&startIndex=" + start_index + "&key=AIzaSyBf2jdRZ2SBVT12yzYUBkQuT-TtgvaPJTQ"
-        }).done(function(data){
-            if(data.totalItems == 0){
-                $(".book").addClass("inactive");
-                $(".stats").removeClass("inactive");
-                console.log("NO BOOK AVAILABLE WITH THE FOLLOWING SEARCH: \"" + search + "\"");
-                return -1;
-            }
-            var book;
-            for(var i = 0; i < data.items.length; i++){
-                var value = data.items[i];
-                book = {};
-                if(value != undefined){
-                    if(value.volumeInfo != undefined){
-                        if(value.volumeInfo.title != undefined){
-                            book.name = value.volumeInfo.title;
-                        } else {
-                            book.name = "TITLE NOT AVAILABLE";
-                        }
-                        if(value.volumeInfo.authors != undefined){
-                            book.authors = value.volumeInfo.authors;
-                        } else {
-                            book.authors =  ["NO AUTHOR AVAILABLE"];
-                        }
-                        if(value.volumeInfo.imageLinks != undefined){
-                            book.img = value.volumeInfo.imageLinks.thumbnail;
-                        } else {
-                            book.img = "resources/no_cover.png";
-                        }
-                        if(value.volumeInfo.description != undefined){
-                            book.description = value.volumeInfo.description;
-                        } else {
-                            book.description = "NO DESCRIPTION AVAILABLE";
-                        }
-                        if(value.volumeInfo.canonicalVolumeLink != undefined){
-                            book.links = [
-                                {
-                                    url: value.volumeInfo.canonicalVolumeLink,
-                                    name: "More Info"
-                                }
-                            ];
-                        }
-                        book.opinion = "";
-                    }
-                }
-                obj.books.push(book);
-            }
-            if(start_index != 0){
-                $(".stats").addClass("inactive");
-                $(".book").removeClass("inactive");
-            }
-            obj.loadNext();
-        });
+        this.loadNext();
+        // this.currentBook = 0;
+        // this.totalBooks = 3;
     }
     loadBook(book){
         $(".book img").attr("src", book.img);
         $(".book h1").text(book.name);
-        var authors = book.authors[0];
-        var i;
-        for(i = 1; i < book.authors.length; i++){
-            authors += ", " + book.authors[i];
-        }
-        $(".book h4").text(authors);
+        $(".book h4").text(book.author);
         $(".book p").text(book.description);
         var $links = $(".book a");
-        for(i = 0; i < book.links.length; i++){
+        for(var i = 0; i < 4; i++){
             $links.eq(i).text(book.links[i].name);
             $links.eq(i).attr("href", book.links[i].url);
         }
         this.seenBooks.push(this.books.splice(0, 1)[0]);
     }
     loadNext(opinion){
+        // var i = this.nextIndex();
+        // console.log(i);
         if(this.books[0] == undefined){
             return -1;
         }
@@ -95,6 +111,9 @@ class Library{
             this.books.push(this.seenBooks[i]);
         }
         this.seenBooks = [];
+        this.books.forEach(function(value, index){
+            console.log(value);
+        });
     }
     addBook(book){
         this.books.push(book);
@@ -102,8 +121,12 @@ class Library{
     }
 }
 
-var library = new Library("Harry Potter");
+var library = new Library();
 
+
+
+
+// var opinions = [];
 var likes = "";
 var dislikes = "";
 
@@ -126,36 +149,23 @@ $("button.like-dislike").click(function () {
 });
 
 $("button.reset").click(function() {
+    library.reset();
+    library.loadNext();
     $(".stats").addClass("inactive");
     $(".book").removeClass("inactive");
     likes = "";
     dislikes = "";
     $("label").text("None");
-    var search = library.searchParam;
-    library = new Library(search);
-    // library.reset();
-    // if(library.loadNext() != -1){
-    //     $(".stats").addClass("inactive");
-    //     $(".book").removeClass("inactive");
-    //     likes = "";
-    //     dislikes = "";
-    //     $("label").text("None");
-    // }
 });
 
-$(".ten-more").click(function(){
-    library.currentIndex += 10;
-    library.getBooks(library.searchParam, library.currentIndex);
-});
-
-$(".search").click(function(){
-    $(".stats").addClass("inactive");
-    $(".search-page").removeClass("inactive");
-});
-
-$("div.search-page button").click(function(){
-    var search = $("#input-text").val();
-    library = new Library(search);
-    $(".search-page").addClass("inactive");
-    $(".book").removeClass("inactive");
-});
+//  event listener to fade out a book's entire div when like/dislike is clicked
+// $("button.like-dislike").click(function(){
+//     $current = $("div.active").removeClass("active");
+    
+//     $next = $current.next();
+//     if($next.length == 0){
+//         $next = $(".book:first-of-type");
+//     }
+    
+//     $next.addClass("active");
+// });

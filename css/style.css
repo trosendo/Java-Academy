@@ -51,6 +51,15 @@ a {
     display: none;
 }
 
+div.stats button{
+    margin-bottom: 20px;
+}
+
+div.search-page button{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 /* .book{
     display: none;
 }

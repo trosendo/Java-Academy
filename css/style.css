@@ -15,6 +15,7 @@ img {
     max-width: 400px; 
     max-height: 400px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 p {
@@ -59,7 +60,28 @@ div.search-page button{
     margin-top: 10px;
     margin-bottom: 20px;
 }
+h1{
+    color: brown;
+}
 
+table a{
+    color: black;
+}
+
+#waiting, div.book, div.stats{
+    display: none;
+}
+/* table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid rgb(100, 100, 100);
+} */
 /* .book{
     display: none;
 }

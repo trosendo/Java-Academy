@@ -1,30 +1,21 @@
 class Library{
     constructor(search){
         this.books = [];
-        this.searchedParams = {
-            param: search,
-            count: 1
-        };
+        this.seenBooks = [];
         this.searchParam = search;
-        this.searchIndex = 0;
-        this.bookIndex = 0;
-        this.getBooks(this.searchParam, this.searchIndex);
+        this.currentIndex = 0;
+        this.getBooks(this.searchParam, this.currentIndex);
     }
     getBooks(search, start_index){
         var obj = this;
         $.ajax({
-            url: "https://www.googleapis.com/books/v1/volumes?q=" + search + "&startIndex=" + start_index + "&key=AIzaSyBf2jdRZ2SBVT12yzYUBkQuT-TtgvaPJTQ",
-            beforeSend: function(){
-                $("#waiting").toggle();
-            }
+            url: "https://www.googleapis.com/books/v1/volumes?q=" + search + "&startIndex=" + start_index + "&key=AIzaSyBf2jdRZ2SBVT12yzYUBkQuT-TtgvaPJTQ"
         }).done(function(data){
-            if(data.totalItems == 0 || data.items == undefined){
-                alert("No book availabe with the following search: \"" + search + "\"");
+            if(data.totalItems == 0){
+                $(".book").toggle();
+                $(".stats").toggle();
+                console.log("NO BOOK AVAILABLE WITH THE FOLLOWING SEARCH: \"" + search + "\"");
                 return -1;
-            }else if(data.totalItems < 10){
-                $("div.stats button.ten-more").prop("disabled",true);
-            } else {
-                $("div.stats button.ten-more").prop("disabled",false);
             }
             var book;
             for(var i = 0; i < data.items.length; i++){
@@ -61,12 +52,7 @@ class Library{
                             ];
                         }
                         book.opinion = "";
-                        book.seen = false;
                     }
-                }
-                if(i == 0 && obj.books.length > 0 && book == obj.books[obj.books.length - 1]){
-                    console.log("ERROR");
-                    continue;
                 }
                 obj.books.push(book);
             }
@@ -74,9 +60,6 @@ class Library{
                 $(".stats").toggle();
                 $(".book").toggle();
             }
-            $(".search-page").hide();
-            $("#waiting").hide();
-            $(".book").show();
             obj.loadNext();
         });
     }
@@ -95,30 +78,34 @@ class Library{
             $links.eq(i).text(book.links[i].name);
             $links.eq(i).attr("href", book.links[i].url);
         }
-        // this.books[this.currentIndex++].seen = true; NOT SEEN YET (ONLY WHEN LIKE/DISLIKE IS CLICKED)!
+        this.seenBooks.push(this.books.splice(0, 1)[0]);
     }
-    loadNext(){
-        if(this.bookIndex >= this.books.length){
+    loadNext(opinion){
+        if(this.books[0] == undefined){
             return -1;
         }
-        this.loadBook(this.books[this.bookIndex]);
+        if(opinion != undefined){
+            this.books[0].opinion = opinion;
+        }
+        this.loadBook(this.books[0]);
         return 0;
     }
-    setCurrentBookAsSeen(opinion){
-        this.books[this.bookIndex].seen = true;
-        this.books[this.bookIndex++].opinion = opinion;
-    }
     reset(){
-        for(var i = 0; i < this.books.length; i++){
-            this.books[i].seen = true;
+        for(var i = 0; i < this.seenBooks.length; i++){
+            this.books.push(this.seenBooks[i]);
         }
-        this.bookIndex = 0;
+        this.seenBooks = [];
         this.loadNext();
+    }
+    addBook(book){
+        this.books.push(book);
+        this.totalBooks++;
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$("#input-text").val("");
-var library;
+$("div.book").toggle();
+$("div.stats").toggle();
+var library = new Library("Harry Potter");
 
 var likes = "";
 var dislikes = "";
@@ -126,22 +113,28 @@ var dislikes = "";
 // this event listener handles the stats output
 $("button.like-dislike").click(function () {
     var opinion = $(this).attr("data-Opinion");
-    var currentBook = library.books[library.bookIndex];
-    if(currentBook != undefined){    
-        var c = (opinion == "Like") ? "table-success" : "table-danger";
+    var book = library.seenBooks[library.seenBooks.length - 1];
+    if(library.loadNext(opinion) == -1){
+        $(".book").toggle(); // hide
+        $(".stats").toggle(); // show
+    } 
+    if(book != undefined){    
+        var c = (opinion == "like") ? "table-success" : "table-danger";
         var txt = ` <tr class="` + c + `">
-                        <td>` + (library.bookIndex+1) + `</td>
-                        <td><a target="_blank" href="` + currentBook.links[0].url + `">` + currentBook.name + `</a></td>
+                        <td>` + book.name + `</td>
                         <td>` + opinion + `</td>
                     </tr>`;
         $("table#display tbody").append(txt);
     }
-    library.setCurrentBookAsSeen(opinion);
-    var nextBook = library.loadNext(); // load next book and assign the return value to variable nextBook
-    if(nextBook == -1){ // end of books
-        $(".book").toggle(); // hide
-        $(".stats").toggle(); // show
-    } 
+    // if(opinion == "like"){
+    //     likes += " - " + $(".book h1.title").text() + "<br>";
+    //     $("label#likes").html(likes);
+    // }
+    // else {
+    //     dislikes += " - " + $(".book h1.title").text() + "<br>";
+    //     $("label#dislikes").html(dislikes);
+    // }
+    // console.log(opinions[book_count++]);
 });
 
 $("div.stats button.reset").click(function() {
@@ -154,26 +147,21 @@ $("div.stats button.reset").click(function() {
 });
 
 $("div.stats button.ten-more").click(function(){
-    library.searchIndex += 10;
-    library.getBooks(library.searchParam, library.searchIndex);
+    library.currentIndex += 10;
+    library.getBooks(library.searchParam, library.currentIndex);
 });
 
 $("div.stats button.search").click(function(){
     $(".stats").toggle();
     $(".search-page").toggle();
-    $("#input-text").val("");
-    // likes = "";
-    // dislikes = "";
-    // $("table#display tbody").html("");
+    likes = "";
+    dislikes = "";
+    $("label").text("None");
 });
 
 $("div.search-page button").click(function(){
     var search = $("#input-text").val();
-    console.log(search);
-    if(library == undefined){
-        library = new Library(search);
-    // } else if(search){
-    } else {
-        library.getBooks(search, 0);
-    }
+    library = new Library(search);
+    $(".search-page").toggle();
+    $(".book").toggle();
 });

@@ -12,6 +12,20 @@
 <body>
     <div class="container">
         <div class="row">
+
+            <div class="col-sm search-page text-center">
+                <h1>Welcome to Book's Tinder!</h1>
+                <p class="centered">Please search for any book below</p>
+                <form>
+                    <input id="input-text" type="search" placeholder="Search...">
+                </form>
+                <button class="btn btn-block">Search Books</button>
+                <img id="waiting" src="resources/waiting.gif" />
+            </div>
+
+            <!-- <div class="col-sm text-center" id="waiting">
+            </div> -->
+
             <div class="col-sm book" id="liv1">
                 <img class="centered" src="">
                 <h1 class="centered title"></h1>
@@ -20,47 +34,47 @@
                 <div id="container-fluid">
                     <div class="row">
                         <div class="col-6">
-                            <button data-Opinion="like" class="btn btn-lg btn-block btn-success like-dislike">Gosto</button>
+                            <button data-Opinion="Like" class="btn btn-lg btn-block btn-success like-dislike">Gosto</button>
                             <a target="_blank" href=""></a>
                             <a target="_blank" href=""></a>
                             <a target="_blank" href=""></a>
                             <a target="_blank" href=""></a>    
                         </div>
                         <div class="col-6">
-                            <button data-Opinion="dislike" class="btn btn-lg btn-block btn-danger like-dislike">Não Gosto</button>
+                            <button data-Opinion="Dislike" class="btn btn-lg btn-block btn-danger like-dislike">Não Gosto</button>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <div class="col-sm stats inactive">
-                <h1 class="centered">Stats</h1>
+            <div class="col-sm stats">
+                <table id="display" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>N</th>
+                            <th>Título</th>
+                            <th>Opinião</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!-- <h1 class="centered">Stats</h1>
                 <h5>Likes:</h5>
                 <label id="likes">None</label>
                 <h5>Dislikes</h5>
-                <label id="dislikes">None</label>
+                <label id="dislikes">None</label> -->
                 <br>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm text-center">
-                            <button class="stats ten-more">Get 10 More</button>
-                            <button class="reset stats">Reset</button>
-                            <button class="search stats">New Search</button>
+                            <button class="btn ten-more">Get 10 More</button>
+                            <button class="btn reset">Reset</button>
+                            <button class="btn search">New Search</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-sm search-page text-center inactive">
-                <h1>Search Page</h1>
-                <br>
-                <br>
-                <form>
-                    <input id="input-text" type="search" placeholder="Search...">
-                </form>
-                <button class="btn">Search Books</button>
-            </div>
         </div>
     </div>
     <script src="js/jquery-3.3.1.js"></script>

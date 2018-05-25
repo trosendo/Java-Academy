@@ -122,6 +122,8 @@ var library;
 
 var likes = "";
 var dislikes = "";
+var typingTimer;
+var doneTypingInterval = 2000; // 2 seconds
 
 // this event listener handles the stats output
 $("button.like-dislike").click(function () {
@@ -167,13 +169,24 @@ $("div.stats button.search").click(function(){
     // $("table#display tbody").html("");
 });
 
+function doneTyping(){
+    
+}
+
 $("div.search-page button").click(function(){
     var search = $("#input-text").val();
-    console.log(search);
     if(library == undefined){
         library = new Library(search);
-    // } else if(search){
     } else {
         library.getBooks(search, 0);
+    }
+});
+
+$("#input-text").keyup(function() {
+    clearTimeout(typingTimer);
+    if($(this).val().length > 2){
+        typingTimer = setTimeout(function(){
+            $("div.search-page button").click(); 
+        }, doneTypingInterval);
     }
 });
